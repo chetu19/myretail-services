@@ -2,17 +2,22 @@ package com.ecom.myretail.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.ecom.myretail.model.ErrorInfo;
 
+/**
+ * REST exception handlers defined at a global level for the application. 
+ * Extends ResponseEntityExceptionHandler to handle Response Entity Exceptions
+ */
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 	
@@ -41,11 +46,22 @@ public class GlobalExceptionHandler {
 	 * @return
 	 */
     @ExceptionHandler({ Exception.class })
-    public ResponseEntity<ErrorInfo> handleAnyException(Exception e) {
+    public ResponseEntity<ErrorInfo> handleAnyException(Exception e ) {
     	ErrorInfo errorInfo = new ErrorInfo();
 		errorInfo.setMessage("Internal Server Error Occured");
 		errorInfo.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return response(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    /**
+     * Send a 409 Conflict in case of concurrent modification 
+     */
+    @ExceptionHandler({  DataIntegrityViolationException.class })
+    public ResponseEntity <ErrorInfo> handleConflict(Exception ex) {
+    	ErrorInfo errorInfo = new ErrorInfo();
+		errorInfo.setMessage(ex.getMessage());
+		errorInfo.setStatusCode(HttpStatus.CONFLICT.value());
+        return response(errorInfo, HttpStatus.CONFLICT);
     }
 	
 	

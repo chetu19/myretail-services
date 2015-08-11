@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestPart;
 
+import com.ecom.myretail.model.Price;
 import com.ecom.myretail.model.Product;
 
 @Repository
@@ -45,6 +46,15 @@ public class ProductDaoImpl implements ProductDao {
 		
 		SqlParameterSource namedParameters = new MapSqlParameterSource("category_name", categoryName);
 		return this.jdbcTemplate.query(getCategorProductsByNameQuery, namedParameters, new BeanPropertyRowMapper <Product>(Product.class));
+	}
+
+	public Price getProductPrice(Long productId) {
+		
+		SqlParameterSource namedParameters = new MapSqlParameterSource("product_id", productId);
+		return this.jdbcTemplate.queryForObject( getProductPriceQuery , namedParameters ,  
+						new BeanPropertyRowMapper <Price>(Price.class) );	
+	
+		
 	}
 	
 
