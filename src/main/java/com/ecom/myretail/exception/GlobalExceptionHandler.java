@@ -31,7 +31,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	 */
 	@ExceptionHandler(MyRetailServiceException.class)
 	protected ResponseEntity<ErrorInfo> handleError(MyRetailServiceException ex, WebRequest request) {
-		log.error("Error Processing this request", ex.getMessage());
+		log.error("Error Processing this request : {}", ex.getMessage());
 		ErrorInfo errorInfo = new ErrorInfo();
 		errorInfo.setMessage(ex.getMessage());
 		errorInfo.setStatusCode(HttpStatus.NOT_FOUND.value());
@@ -47,6 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	 */
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<ErrorInfo> handleAnyException(Exception e ) {
+    	log.error("Exception Occured while Processing this request : {}", e.getMessage());
     	ErrorInfo errorInfo = new ErrorInfo();
 		errorInfo.setMessage("Internal Server Error Occured");
 		errorInfo.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -58,6 +59,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler({  DataIntegrityViolationException.class })
     public ResponseEntity <ErrorInfo> handleConflict(Exception ex) {
+    	log.error("Data conflict occured processing this request : {}", ex.getMessage());
     	ErrorInfo errorInfo = new ErrorInfo();
 		errorInfo.setMessage(ex.getMessage());
 		errorInfo.setStatusCode(HttpStatus.CONFLICT.value());

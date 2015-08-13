@@ -2,7 +2,6 @@ package com.ecom.myretail.model;
 
 import java.io.Serializable;
 
-import org.springframework.http.HttpStatus;
 
 public class ErrorInfo implements Serializable {
 	
