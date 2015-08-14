@@ -1,0 +1,9 @@
+<!-- This File is not used. Added for DBUnit demo only -->
+<dataset>
+     <product  product_id="1001" product_name="test product1" sku="abc123" />
+     <product  product_id="1002" product_name="test product2" sku="xyz123" />
+     <category category_id="9999" category_name="test category1"  />
+     <category category_id="8888" category_name="test category2"  /> 
+     <catprdrel category_id="9999" product_id="1001"  />
+     <catprdrel category_id="8888" product_id="1002"  />  
+</dataset>

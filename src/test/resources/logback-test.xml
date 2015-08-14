@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- console log configuration.. -->
+	<property name="logBasePath" value="${catalina.base}/logs" />
+	<property name="serviceLogFileName" value="service" />
+	<property name="accessLogFileName" value="service-access" />
+	
+    <root level="OFF">
+	</root>
+<!-- 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d [%thread] %-5level %logger{50} %L - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder> 
+			<pattern>%d [%thread] %-5level %logger{50} %L - %msg%n</pattern> 
+		</encoder>
+		<file>${logBasePath}/${serviceLogFileName}.log</file> 
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+			<fileNamePattern >${logBasePath}/${serviceLogFileName}.log%d{yyyy-MM-dd}.log</fileNamePattern> 
+			<maxHistory>5</maxHistory> 
+		</rollingPolicy> 
+	</appender>
+	<appender name="accessLogAppender" class="ch.qos.logback.core.FileAppender">
+        <encoder> 
+			<pattern>%d [%thread] %-5level %logger{50} %L - %msg%n</pattern> 
+		</encoder>
+		<file>${logBasePath}/${accessLogFileName}.log</file> 
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+			<fileNamePattern >${logBasePath}/${accessLogFileName}.log%d{yyyy-MM-dd}.log</fileNamePattern> 
+			<maxHistory>5</maxHistory> 
+		</rollingPolicy> 
+    </appender>
+    <logger name="com.ecom.myretail.interceptor.RequestInterceptor" level="OFF" additivity="false">
+        <appender-ref ref="accessLogAppender"/>
+    </logger> -->
+
+</configuration>

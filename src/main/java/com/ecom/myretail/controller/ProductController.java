@@ -29,7 +29,7 @@ public class ProductController {
 	 * @return Returns the Product details for the requested Product Id
 	 */
 	@RequestMapping(value = "/{productId}", method = RequestMethod.GET)
-	public Product getProduct(@PathVariable Long productId){
+	public Product getProduct(@PathVariable  Long productId){
 		
 		return productService.getProduct(productId);
 		
@@ -46,7 +46,7 @@ public class ProductController {
 	 */
 	@RequestMapping(value = "/product-set", method = RequestMethod.GET)
 	public List <Product> getProductSet(@RequestParam (required= false ) Long categoryId  
-			, @RequestParam  (required= false , defaultValue ="") String categoryName){
+			, @RequestParam  (required= false , defaultValue ="")  String categoryName){
 		
 		return productService.getProductSet(categoryId , categoryName);
 		

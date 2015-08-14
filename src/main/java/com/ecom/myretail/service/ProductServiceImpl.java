@@ -9,13 +9,22 @@ import com.ecom.myretail.exception.MyRetailServiceException;
 import com.ecom.myretail.model.Price;
 import com.ecom.myretail.model.Product;
 
+/**This is Product and Price Service Implementation Class. It exposes necessary methods
+ * to  product and price  details from the system.
+ * 
+ * @author nshetty
+ *
+ */
 @Service
 public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
 	private ProductDao productDao;
 	
-	public Product  getProduct(Long  productId ){
+	/**
+	 * This method fetches the product details for given productId.
+	 */
+	public Product  getProduct(final Long  productId ){
 		
 		try{
 			return  productDao.getProduct(productId);
@@ -25,23 +34,41 @@ public class ProductServiceImpl implements ProductService{
 		}
 	}
 
-	public List<Product> getProductSet(Long categoryId, String categoryName) {
+	/**
+	 * Returns a list of Products with their details
+	 * 
+	 * @param categoryId
+	 * @param categoryName
+	 * @return Returns all the products if optional parameters categoryId and categoryName are not passed. 
+	 * If categoryId or categoryName is passed, then its products are returned. 
+	 * When both are passed,  products under the categoryId are returned (categoryName is ignored)
+	 */
+	public List<Product> getProductSet(final  Long categoryId, final  String categoryName) {
+		
 		
 		try{
+			List <Product> productSet;
 			if(null == categoryId && StringUtils.isEmpty(categoryName)){
-				return productDao.getProductSet();
+				productSet = productDao.getProductSet(); //Returns all the products if optional parameters categoryId and categoryName are not passed
 			}else if (null != categoryId){
-				return productDao.getProductSet( categoryId);
+				productSet =  productDao.getProductSet( categoryId); // Returns the products under the given categoryId
 			}else {
-				return productDao.getProductSet( categoryName);
+				productSet = productDao.getProductSet( categoryName); // Returns the products under the given category Name
 			}
+			
+			return productSet;
 		}catch(RuntimeException ex){
 			String errorMsg = String.format("No Products Found");
 			throw new MyRetailServiceException(errorMsg , ex );
 		}
+		
+		
 	}
-
-	public Price getProductPrice(Long productId) {
+	
+	/**
+	 * This method fetches the Price details of  given productId.
+	 */
+	public Price getProductPrice(final Long productId) {
 		try{
 			return productDao.getProductPrice(productId);
 		}catch(RuntimeException ex){
